@@ -1,0 +1,68 @@
+//#include "stdafx.h"
+#include <cmath>
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+
+using namespace std;
+
+int main()
+{
+	
+	ofstream fout("out.txt");
+	ifstream fin("in.txt");
+	double h = 0.0001;
+	double x0 = 0;
+	double xN = 1337.0;
+	
+	fin >> xN;
+	int N = xN / h;
+	//unsigned int start;
+	//unsigned int end;
+	/*
+	//rectangle
+	start = clock();
+	double ans1 = 0;
+	for (int i = 0; i < N; i++) {
+		double x = x0 + i * h;
+		ans1 += cos(x * x) + sin(x * x);
+	}
+	ans1 *= h;
+	end = clock();
+	cout << fixed << setprecision(8) << ans1 << endl;
+	cout << (end - start) / 1000.0 << endl << endl;
+
+
+	//trap
+	start = clock();
+	double ans2 = 0;
+	for (int i = 1; i < N; i++) {
+		double x = x0 + i * h;
+		ans2 += cos(x * x) + sin(x * x);
+	}
+	ans2 += (cos(x0 * x0) + sin(x0 * x0) + cos(xN * xN) + sin(xN * xN)) / 2;
+	ans2 *= h;
+	end = clock();
+	cout << fixed << setprecision(8) << ans2 << endl;
+	cout << (end - start) / 1000.0 << endl << endl;
+	*/
+	//kot
+	//start = clock();
+	double x1;
+	double x;
+	double x2;
+	double ans3 = 0;
+	for (int i = 1; i < N; i += 2) {
+		x1 = x0 + (i - 1) * h;
+		x = x0 + i * h;
+		x2 = x0 + (i + 1) * h;
+		ans3 += cos(x1 * x1) + sin(x1 * x1) + 4.0 * (cos(x * x) + sin(x * x)) + cos(x2 * x2) + sin(x2 * x2);
+	}
+	ans3 *= h / 3.0;
+	//end = clock();
+	fout << fixed << setprecision(5) << ans3 << endl;
+	//cout << (end - start) / 1000.0 << endl;
+
+	//cin >> ans3;
+    return 0;
+}
